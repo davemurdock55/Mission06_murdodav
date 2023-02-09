@@ -23,6 +23,16 @@ namespace Mission06_murdodav.Controllers
             return View();
         }
 
+        public IActionResult AddAMovie()
+        {
+            return View();
+        }
+
+        public IActionResult Podcasts()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

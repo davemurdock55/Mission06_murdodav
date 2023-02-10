@@ -23,7 +23,14 @@ namespace Mission06_murdodav.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult AddAMovie()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddAMovie(Movie ar)
         {
             return View();
         }

@@ -40,13 +40,23 @@ namespace Mission06_murdodav.Controllers
         [HttpPost] // a post method that retrieves the AddAMovie form inputs as "ar
         public IActionResult AddAMovie(Movie ar)
         {
-            // Proposing the changes using the form inputs
-            moviesContext.Add(ar);
-            // saving the changes to the database
-            moviesContext.SaveChanges();
+            // If the info in the form is valid...
+            if (ModelState.IsValid)
+            {
+                // Proposing the changes using the form inputs (adding the data to the database)
+                moviesContext.Add(ar);
+                // saving the changes to the database
+                moviesContext.SaveChanges();
 
-            // returns you to the AddAMovie page (no confirmation page necessary for this assignment :) )
-            return RedirectToAction();
+                // returns you to the AddAMovie page (no confirmation page necessary for this assignment :) )
+                return RedirectToAction();
+            }
+            // if the model/field is NOT valid...
+            else
+            {
+                // bring them back to the form view
+                return View();
+            }
         }
 
         public IActionResult Podcasts()

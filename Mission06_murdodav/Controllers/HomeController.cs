@@ -13,9 +13,17 @@ namespace Mission06_murdodav.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        // making a private MovieCollectionContext instance called _moviesContext with a getter and setter
+        // (so that we can hook it up to our database)
+        private MovieCollectionContext moviesContext { get; set; }
+
+        // Constructor
+        // (passing logger and the MoviesCollectionContext object to the constructor
+        public HomeController(ILogger<HomeController> logger, MovieCollectionContext movies_context)
         {
             _logger = logger;
+            // inserting that moviesContext object into the _moviesContext variable
+            moviesContext = movies_context;
         }
 
         public IActionResult Index()
@@ -29,10 +37,16 @@ namespace Mission06_murdodav.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost] // a post method that retrieves the AddAMovie form inputs as "ar
         public IActionResult AddAMovie(Movie ar)
         {
-            return View();
+            // Proposing the changes using the form inputs
+            moviesContext.Add(ar);
+            // saving the changes to the database
+            moviesContext.SaveChanges();
+
+            // returns you to the AddAMovie page (no confirmation page necessary for this assignment :) )
+            return RedirectToAction();
         }
 
         public IActionResult Podcasts()

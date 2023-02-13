@@ -8,6 +8,10 @@ namespace Mission06_murdodav.Models
 {
     public class Movie
     {
+        [Key]
+        [Required]
+        public int MovieID { get; set; }
+
         [Required]
         public string Category { get; set; }
 
@@ -15,7 +19,7 @@ namespace Mission06_murdodav.Models
         public string Title { get; set; }
 
         [Required]
-        public byte Year { get; set; }
+        public int Year { get; set; }
 
         [Required]
         public string Director { get; set; }

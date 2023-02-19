@@ -15,6 +15,7 @@ namespace Mission06_murdodav.Models
         // Setting up the foreign key relationship to the Category model/table
         
         [Required(ErrorMessage = "The Category field is required")]
+        [Range(1, 9999999999999999999, ErrorMessage = "The Category field is required")]
         public int CategoryID { get; set; } // Getting the categoryID
         public Category Category { get; set; } // Getting a Category object (the two lines above and below create the FK relationship with the Category table)
 

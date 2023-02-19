@@ -59,8 +59,7 @@ namespace Mission06_murdodav.Controllers
         [HttpPost] // a post method that retrieves the AddMovie form inputs as "ar
         public IActionResult AddMovie(Movie ar)
         {
-            ViewBag.Categories = moviesContext.Categories.ToList();
-
+            
             // If the info in the form is valid...
             if (ModelState.IsValid)
             {
@@ -76,6 +75,8 @@ namespace Mission06_murdodav.Controllers
             // if the model/field is NOT valid...
             else
             {
+                ViewBag.Categories = moviesContext.Categories.ToList();
+
                 // bring them back to the form view
                 return View();
             }
@@ -101,7 +102,6 @@ namespace Mission06_murdodav.Controllers
         [HttpPost] // a post method that retrieves the AddMovie form inputs as "ar
         public IActionResult EditMovie(Movie ar)
         {
-            ViewBag.Categories = moviesContext.Categories.ToList();
             // If the info in the form is valid...
             if (ModelState.IsValid)
             {
@@ -119,7 +119,7 @@ namespace Mission06_murdodav.Controllers
                 ViewBag.Categories = moviesContext.Categories.ToList();
 
                 // bring them back to the form view
-                return View();
+                return View(ar);
             }
         }
 

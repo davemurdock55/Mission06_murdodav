@@ -39,7 +39,7 @@
                                 <div class="form-group">
                                     <label asp-for="CategoryID" for="categoryid" class="form-label mt-3 mx-2">Category</label>
                                     <select asp-for="CategoryID" class="form-select" id="categoryid" name="categoryid">
-                                        <option value="">Select a Category</option>
+                                        <option value="0">Select a Category</option>
                                         <!-- for each entry in the ViewBag.Categories list of Category objects, put them in a Category object called "c"-->
                                         @foreach (Category c in ViewBag.Categories)
                                         {

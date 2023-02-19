@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Confirmation";
+}
+
+@model Mission06_murdodav.Models.Movie
+
+<div class="text-center">
+    <h1 class="mt-3">@Model.Title was successfully added!</h1>
+
+    <a asp-controller="Home" asp-action="AddMovie" class="btn btn-outline-light mt-3">Add Another Movie</a>
+    <br />
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Home</a>
+</div>

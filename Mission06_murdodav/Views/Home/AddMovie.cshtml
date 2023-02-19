@@ -23,17 +23,26 @@
                         <p class="text-center pb-2" style="font-size: 20px;">Enter the following information to add a movie to your movie collection:</p>
                         <div class="table-group-divider"></div>
                         <form method="POST" class="text-start px-5">
+
                             @* Showing all form validation errors *@
-                            <div asp-validation-summary="All"></div>
+                            @if (!Html.ViewData.ModelState.IsValid)
+                            {
+                                <div class="alert alert-dismissible alert-primary mt-3 p-1">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    <h4 class="alert-heading px-2 pb-0">Errors:</h4>
+                                    <div asp-validation-summary="All" class="pt-0 pb-0"></div>
+                                </div>
+                            }
+
                             <fieldset>
                                 <!-- Category Dropdown -->
                                 <div class="form-group">
                                     <label asp-for="CategoryID" for="categoryid" class="form-label mt-3 mx-2">Category</label>
-                                    <select asp-for="CategoryID" class="form-select" id="categoryid" name="categoryid" required>
+                                    <select asp-for="CategoryID" class="form-select" id="categoryid" name="categoryid">
                                         <option value="">Select a Category</option>
                                         <!-- for each entry in the ViewBag.Categories list of Category objects, put them in a Category object called "c"-->
                                         @foreach (Category c in ViewBag.Categories)
-                                        { 
+                                        {
                                             // Displaying the category name, but setting the categoryid as the value to be submitted
                                             <option value="@c.CategoryID">@c.CategoryName</option>
                                         }
@@ -43,25 +52,25 @@
                                 <!-- Title Text Input -->
                                 <div class="form-group">
                                     <label class="col-form-label mt-2 mx-2" for="title">Title</label>
-                                    <input type="text" asp-for="Title" class="form-control" placeholder="Title" id="title" name="title" required>
+                                    <input type="text" asp-for="Title" class="form-control" placeholder="Title" id="title" name="title">
                                 </div>
 
                                 <!-- Year Number Input -->
                                 <div class="form-group">
                                     <label class="col-form-label mt-2 mx-2" for="year">Year</label>
-                                    <input type="number" asp-for="Year" class="form-control" placeholder="2023" id="year" name="year" step="1" required>
+                                    <input type="number" asp-for="Year" class="form-control" placeholder="2023" id="year" name="year">
                                 </div>
 
                                 <!-- Director Text Input -->
                                 <div class="form-group">
                                     <label class="col-form-label mt-2 mx-2" for="director">Director</label>
-                                    <input type="text" asp-for="Director" class="form-control" placeholder="Director" id="director" name="director" required>
+                                    <input type="text" asp-for="Director" class="form-control" placeholder="Director" id="director" name="director">
                                 </div>
 
                                 <!-- Rating Dropdown Input -->
                                 <div class="form-group">
                                     <label for="rating" class="form-label mt-2 mx-2">Rating</label>
-                                    <select asp-for="Rating" class="form-select" id="rating" name="rating" required>
+                                    <select asp-for="Rating" class="form-select" id="rating" name="rating">
                                         <option>G</option>
                                         <option>PG</option>
                                         <option>PG-13</option>
@@ -90,7 +99,7 @@
                                 <!-- Notes Text Input -->
                                 <div class="form-group">
                                     <label class="col-form-label mt-2 mx-2" for="notes">Notes</label>
-                                    <input type="text" asp-for="Notes" class="form-control" placeholder="Notes" id="notes" name="notes" maxlength="25">
+                                    <input type="text" asp-for="Notes" class="form-control" placeholder="Notes" id="notes" name="notes">
                                 </div>
 
                                 <!-- Submit Button -->

@@ -26,6 +26,7 @@ namespace Mission06_murdodav.Controllers
             return View();
         }
         
+
         [HttpGet]
         public IActionResult ViewMovies()
         {
@@ -44,6 +45,7 @@ namespace Mission06_murdodav.Controllers
             return View(MovieList);
         }
 
+
         [HttpGet]
         public IActionResult AddMovie()
         {
@@ -60,7 +62,7 @@ namespace Mission06_murdodav.Controllers
             // If the info in the form is valid...
             if (ModelState.IsValid)
             {
-                // Proposing the changes using the form inputs (adding the data to the database)
+                // Proposing the changes using the form inputs (adding the record to the database)
                 moviesContext.Add(ar);
                 // saving the changes to the database
                 moviesContext.SaveChanges();
@@ -91,21 +93,58 @@ namespace Mission06_murdodav.Controllers
             // passing to the EditMovie.cshtml view the "movie" object we just found
             return View(movie);
         }
+    
 
 
         [HttpPost] // a post method that retrieves the AddMovie form inputs as "ar
         public IActionResult EditMovie(Movie ar)
         {
-            // Proposing the updates using the form inputs (updating the data in the database)
-            moviesContext.Update(ar);
+            // If the info in the form is valid...
+            if (ModelState.IsValid)
+            {
+                // Proposing the updates using the form inputs (updating the record in the database)
+                moviesContext.Update(ar);
+                // saving the changes to the database
+                moviesContext.SaveChanges();
+
+                return RedirectToAction("ViewMovies");
+            }
+            // if the model/field is NOT valid...
+            else
+            {
+                // getting the viewbag with the info again
+                ViewBag.Categories = moviesContext.Categories.ToList();
+
+                // bring them back to the form view
+                return View();
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult DeleteMovie(int movieid)
+        {
+
+            // Creating a ViewBag (dynamically created variables that can be seen across all the views and the controller)
+            // getting the Categories object from the moviesContext file, turning that into a list, and then putting it into the ViewBag.Categories dynamic variable
+            ViewBag.Categories = moviesContext.Categories.ToList();
+
+            // getting a single entry in the Movies table that matches the movieid passed in
+            var movie = moviesContext.Movies.Single(x => x.MovieID == movieid);
+
+            // passing to the EditMovie.cshtml view the "movie" object we just found
+            return View(movie);
+
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Movie ar)
+        {
+            // Proposing the deletion using the form inputs (deleting the record FROM THE MOVIES TABLE in the database)
+            moviesContext.Movies.Remove(ar);
             // saving the changes to the database
             moviesContext.SaveChanges();
 
-            return RedirectToAction("ViewMovies");
-        }
-
-        public IActionResult Delete(int movieid)
-        {
             return RedirectToAction("ViewMovies");
         }
 

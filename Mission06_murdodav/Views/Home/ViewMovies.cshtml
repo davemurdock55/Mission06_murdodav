@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Movies";
+}
+
+@model List<Movie>
+
+<h1 class="mt-3">View the Collection</h1>
+
+<table class="table table-hover mt-3">
+    @* Table Header (row)*@
+    <thead class="table-secondary">
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Category</th>
+            <th scope="col">Title</th>
+            <th scope="col">Year</th>
+            <th scope="col">Director</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Edited</th>
+            <th scope="col">Lent To:</th>
+            <th scope="col">Notes</th>
+        </tr>
+    </thead>
+
+    @*Main Table body*@
+    <tbody>
+        @* For each entry in the list object we are getting above, put all its info into an HTML table *@
+        @foreach (var entry in Model) 
+        {
+        <tr>
+            <th scope="row">@entry.MovieID</th>
+            <td>@entry.Category.CategoryName</td> <!-- getting the category name from the category object -->
+            <td>@entry.Title</td>
+            <td>@entry.Year</td>
+            <td>@entry.Director</td>
+            <td>@entry.Rating</td>
+            @if(entry.Edited == true)
+            {
+            <td style="text-transform: capitalize;">@entry.Edited.ToString().ToUpper()</td>
+            }
+            else
+            {
+            <td style="text-transform: capitalize;">@entry.Edited.ToString()</td>
+            }
+
+            <td>@entry.LentTo</td>
+            <td>@entry.Notes</td>
+        </tr>
+        }
+    </tbody>
+</table>

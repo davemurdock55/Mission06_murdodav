@@ -12,8 +12,11 @@ namespace Mission06_murdodav.Models
         [Required]
         public int MovieID { get; set; }
 
+        // Setting up the foreign key relationship to the Category model/table
+        
         [Required]
-        public string Category { get; set; }
+        public int CategoryID { get; set; } // Getting the categoryID
+        public Category Category { get; set; } // Getting a Category object (the two lines above and below create the FK relationship with the Category table)
 
         [Required]
         public string Title { get; set; }

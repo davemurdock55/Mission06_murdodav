@@ -17,11 +17,35 @@ namespace Mission06_murdodav.Models
         }
 
         // Getting a set of data of type "Movie" from our database called "movieinfo"
-        public DbSet<Movie> movieinfo { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Category> Categories { get; set; }
+
 
         // a method that runs when the database is being created
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            mb.Entity<Category>().HasData(
+
+                new Category {CategoryID = 1, CategoryName = "Action/Adventure"},
+
+                new Category { CategoryID = 2, CategoryName = "Comedy" },
+
+                new Category { CategoryID = 3, CategoryName = "Drama" },
+
+                new Category { CategoryID = 4, CategoryName = "Family" },
+
+                new Category { CategoryID = 5, CategoryName = "Horror/Suspense" },
+
+                new Category { CategoryID = 6, CategoryName = "Miscellaneous" },
+
+                new Category { CategoryID = 7, CategoryName = "Television" },
+
+                new Category { CategoryID = 8, CategoryName = "VHS" },
+
+                new Category { CategoryID = 9, CategoryName = "N/A" }
+
+                );
+
             // making the new database with pre-filled-in data
             mb.Entity<Movie>().HasData(
                     // Seeding the database
@@ -30,7 +54,7 @@ namespace Mission06_murdodav.Models
                     new Movie
                     {
                         MovieID = 1,
-                        Category = "Action/Adventure",
+                        CategoryID = 1,
                         Title = "Star Wars: A New Hope",
                         Year = 1977,
                         Director = "George Lucas",
@@ -44,7 +68,7 @@ namespace Mission06_murdodav.Models
                     new Movie
                     {
                         MovieID = 2,
-                        Category = "Family",
+                        CategoryID = 4,
                         Title = "LEGO Batman",
                         Year = 2017,
                         Director = "Chris McKay",
@@ -58,7 +82,7 @@ namespace Mission06_murdodav.Models
                     new Movie
                     {
                         MovieID = 3,
-                        Category = "Comedy",
+                        CategoryID = 2,
                         Title = "She's the Man",
                         Year = 2006,
                         Director = "Andy Fickman",

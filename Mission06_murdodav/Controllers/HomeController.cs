@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mission06_murdodav.Models;
 using System;
@@ -7,11 +8,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace Mission06_murdodav.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
         // making a private MovieCollectionContext instance called _moviesContext with a getter and setter
         // (so that we can hook it up to our database)
@@ -19,9 +20,8 @@ namespace Mission06_murdodav.Controllers
 
         // Constructor
         // (passing logger and the MoviesCollectionContext object to the constructor
-        public HomeController(ILogger<HomeController> logger, MovieCollectionContext movies_context)
+        public HomeController(MovieCollectionContext movies_context)
         {
-            _logger = logger;
             // inserting that moviesContext object into the _moviesContext variable
             moviesContext = movies_context;
         }
@@ -30,10 +30,32 @@ namespace Mission06_murdodav.Controllers
         {
             return View();
         }
+        
+        [HttpGet]
+        public IActionResult ViewMovies()
+        {
+            // putting the movieinfo (response) of the moviesContext table context object into a list of type "Movie"
+            var MovieList = moviesContext.Movies
+                // getting the Cateogry object associated with that movie (through the CategoryID FK relationship)
+                .Include(x => x.Category)
+                //making sure the movie hasn't been edited
+                //.Where(x => x.Edited != true)
+                // ordering by Title
+                .OrderBy(x => x.MovieID)
+                .ToList();
+
+
+            // putting that MovieList into the View function as "context" for the page
+            return View(MovieList);
+        }
 
         [HttpGet]
         public IActionResult AddAMovie()
         {
+            // Creating a ViewBag (dynamically created variables that can be seen across all the views and the controller)
+            // getting the Categories object from the moviesContext file, turning that into a list, and then putting it into the ViewBag.Categories dynamic variable
+            ViewBag.Categories = moviesContext.Categories.ToList();
+
             return View();
         }
 
@@ -62,17 +84,6 @@ namespace Mission06_murdodav.Controllers
         public IActionResult Podcasts()
         {
             return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

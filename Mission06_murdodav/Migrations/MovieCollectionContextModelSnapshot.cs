@@ -15,15 +15,75 @@ namespace Mission06_murdodav.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.22");
 
+            modelBuilder.Entity("Mission06_murdodav.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Drama"
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            CategoryName = "Family"
+                        },
+                        new
+                        {
+                            CategoryID = 5,
+                            CategoryName = "Horror/Suspense"
+                        },
+                        new
+                        {
+                            CategoryID = 6,
+                            CategoryName = "Miscellaneous"
+                        },
+                        new
+                        {
+                            CategoryID = 7,
+                            CategoryName = "Television"
+                        },
+                        new
+                        {
+                            CategoryID = 8,
+                            CategoryName = "VHS"
+                        },
+                        new
+                        {
+                            CategoryID = 9,
+                            CategoryName = "N/A"
+                        });
+                });
+
             modelBuilder.Entity("Mission06_murdodav.Models.Movie", b =>
                 {
                     b.Property<int>("MovieID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -52,13 +112,15 @@ namespace Mission06_murdodav.Migrations
 
                     b.HasKey("MovieID");
 
-                    b.ToTable("movieinfo");
+                    b.HasIndex("CategoryID");
+
+                    b.ToTable("movies");
 
                     b.HasData(
                         new
                         {
                             MovieID = 1,
-                            Category = "Action/Adventure",
+                            CategoryID = 1,
                             Director = "George Lucas",
                             Edited = false,
                             Notes = "This is the unedited v.",
@@ -69,7 +131,7 @@ namespace Mission06_murdodav.Migrations
                         new
                         {
                             MovieID = 2,
-                            Category = "Family",
+                            CategoryID = 4,
                             Director = "Chris McKay",
                             Edited = false,
                             Notes = "Lots of fun!",
@@ -80,7 +142,7 @@ namespace Mission06_murdodav.Migrations
                         new
                         {
                             MovieID = 3,
-                            Category = "Comedy",
+                            CategoryID = 2,
                             Director = "Andy Fickman",
                             Edited = false,
                             Notes = "This is a good one!",
@@ -88,6 +150,15 @@ namespace Mission06_murdodav.Migrations
                             Title = "She's the Man",
                             Year = 2006
                         });
+                });
+
+            modelBuilder.Entity("Mission06_murdodav.Models.Movie", b =>
+                {
+                    b.HasOne("Mission06_murdodav.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

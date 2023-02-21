@@ -16,7 +16,7 @@ namespace Mission06_murdodav.Models
             // leave blank for now
         }
 
-        // Getting a set of data of type "Movie" from our database called "movieinfo"
+        // Getting a set of data of type "Movie" from our database called "Movies"
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Category> Categories { get; set; }
 
